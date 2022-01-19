@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+{% block title %}Vich Form {% endblock %}
+{% block content %}
+    {% block body %}
+        <div class="container-lg">
+            <div class="table-responsive">
+                <div class="table-wrapper">
+                    <div class="table-title">
+                        <div class="row">
+                            <div class="col-sm-8"><h2>Invoice <b>List</b></h2></div>
+                            <div class="col-sm-4">
+                                <a href="{{ path("vich_index") }}" class="btn btn-secondary add-new"><i class="fa fa-arrow-left"></i> Cancel</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{ form_start(form) }}
+                    {{ form_widget(form) }}
+                    {{ form_end(form) }}
+
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        let attachments = '{{ form.attachments|length }}';
+
+        jQuery(document).ready(function () {
+            jQuery('#invoice_addInvoiceAttachment').click(function (e) {
+                e.preventDefault();
+
+                const ia = jQuery('#invoice_attachments, #invoice_digi_key_attachments');
+
+                // grab the prototype template
+                let newWidget = ia.attr('data-prototype');
+                // replace the "__name__" used in the id and name of the prototype
+                // with a number that's unique to your emails
+                // end name attribute looks like name="contact[emails][2]"
+                newWidget = newWidget.replace(/__name__label__/g, attachments);
+                newWidget = newWidget.replace(/__name__/g, attachments);
+                newWidget.className += " file-inputs";
+                attachments++;
+
+                const el = $(newWidget);
+                $('#invoice_addInvoiceAttachment, #invoice_digi_key_addInvoiceAttachment').before(el);
+
+            });
+        })
+    </script>
+{% endblock %}
+

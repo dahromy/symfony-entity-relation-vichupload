@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+{% block title %}Vich {% endblock %}
+{% block content %}
+    {% block body %}
+        <div class="container-lg">
+            <div class="table-responsive">
+                <div class="table-wrapper">
+                    <div class="table-title">
+                        <div class="row">
+                            <div class="col-sm-8"><h2>Invoice <b>List</b></h2></div>
+                            <div class="col-sm-4">
+                                <a href="{{ path("vich_new") }}" class="btn btn-info add-new"><i class="fa fa-plus"></i> Add New
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Number</th>
+                            <th>Description</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        {# @var invoice \App\Entity\Invoice#}
+                        {% for invoice in invoices %}
+                            <tr>
+                                <td>{{ invoice.id }}</td>
+                                <td>{{ invoice.number }}</td>
+                                <td>{{ invoice.description }}</td>
+                                <td>
+                                    <a class="edit" href="{{ path('vich_edit', {'id': invoice.id}) }}" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
+                                    <a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+{% endblock %}
+
